@@ -70,7 +70,7 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
   1. Go into a specific Freestyle project in Jenkins.
   2. Find "Add post-build action" and click it.
 
-  ![YqE7MF.png](https://s1.ax1x.com/2020/05/21/YqE7MF.png)
+  ![post.png](https://ftp.bmp.ovh/imgs/2020/08/5d033ad82a35cf5b.png)
 
 ##### Send build information
 
@@ -78,14 +78,14 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
    2. Enter the following information:
 
        - `Overview pattern` - Optional. A regular expression is used to match the result summary in the build output for display in PingCode.
-         ![YqA1XQ.png](https://s1.ax1x.com/2020/05/21/YqA1XQ.png)
+         ![YqA1XQ.png](https://ftp.bmp.ovh/imgs/2020/08/3e86113c07f92196.png)
 
        - `Default summary` - Optional. If no information can be matched from the result logs, this value will be sent by default.
 
-         ![default summary](https://s1.ax1x.com/2020/06/16/NFT7o6.png)
+         ![default summary](https://ftp.bmp.ovh/imgs/2020/08/74a0b2938e370041.png)
 
       - `Result url` - Optional. A url of result for display in pingcode. if empty, the jenkins console result url will be used.
-         ![result url](https://ftp.bmp.ovh/imgs/2020/07/59c99237e222ea52.png)
+         ![result url](https://ftp.bmp.ovh/imgs/2020/08/ab6d2a256c19640f.png)
 
   Finally, save these configurations. When the build is triggered, it will post the build information to PingCode. If there is a PingCode `#IDENTIFIER` in branch name, commit message or pull request title, you will get views in PingCode agile project about what happening on build.
 
@@ -98,7 +98,7 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
        - `Environment name` - Required. The name of environment that the code will be deployed to. If the environment does not exist, the plugin will automatically create.
        - `Release URL` - Optional. A URL that can view the detail deployment results. If it is empty, no related links are displayed in PingCode.
 
-       ![YbTMt0.png](https://s1.ax1x.com/2020/05/21/YbTMt0.png)
+       ![YbTMt0.png](https://ftp.bmp.ovh/imgs/2020/08/e404f9550614f2de.png)
 
   Finally, save these configurations. When the deployment is triggered, it will post the deployment information to PingCode. If there is a PingCode `#IDENTIFIER` in branch name, commit message or pull request title, you will get views in PingCode agile project about what happening on deployment.
 

@@ -119,7 +119,7 @@ public class PCSendDeployStep extends Step implements Serializable {
 
         @Override
         public String getFunctionName() {
-            return "pingCodeDeployRecord";
+            return "pingcodeDeployRecord";
         }
 
         @org.jetbrains.annotations.NotNull

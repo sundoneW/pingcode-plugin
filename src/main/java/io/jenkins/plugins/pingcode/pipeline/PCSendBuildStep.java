@@ -101,7 +101,7 @@ public class PCSendBuildStep extends Step implements Serializable {
 
         @Override
         public String getFunctionName() {
-            return "pingCodeBuildRecord";
+            return "pingcodeBuildRecord";
         }
 
         @NotNull
