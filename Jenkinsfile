@@ -24,26 +24,22 @@ podTemplate(label: label, cloud: 'kubernetes',
         def commit = scmVars.GIT_COMMIT
         def branch = scmVars.GIT_BRANCH
 
-        stage('Using Worktile Pipeline') {
+        stage('Using PingCode Pipeline') {
             script {
 
                 if (env.DISABLE_WTCTL != "true") {
-
-                   if (env.RUN_BETA != "true") {
-                     container('wtctl') {
-			                       sh 'wtctl'
-
-                      }
+                    if (env.RUN_BETA != "true") {
+                        container('wtctl') {
+			                sh 'wtctl'
+                        }
                    }
 
-                   if (env.RUN_BETA == "true") {
-                     echo 'Using Worktile Pipeline'
-
-                      container('wtctl') {
-			                       sh 'export TAG_NAME=$(git describe --tags) && wtctl'
-                      }
+                if (env.RUN_BETA == "true") {
+                    echo 'Using PingCode Pipeline'
+                    container('wtctl') {
+			            sh 'export TAG_NAME=$(git describe --tags) && wtctl'
+                    }
                    }
-
                 }
             }
         }

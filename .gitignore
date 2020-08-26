@@ -1,12 +1,11 @@
 .idea/
 work/
 target/
-worktile.iml
-
+pingcode.iml
 # vscode
 .project
 .classpath
 .settings
 .factorypath
 
-worktile-assistant.iml
+pingcode-assistant.iml

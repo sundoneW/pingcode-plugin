@@ -1,4 +1,4 @@
-package io.jenkins.plugins.worktile;
+package io.jenkins.plugins.pingcode;
 
 import hudson.model.Run;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class WTHelperTest {
 
     @Test
     public void testIsURL1() {
-        assertTrue(WTHelper.isURL("https://ww.worktile.com"));
+        assertTrue(WTHelper.isURL("https://ww.pingcode.com"));
         assertFalse(WTHelper.isURL("hello, world"));
     }
 
