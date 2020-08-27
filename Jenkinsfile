@@ -14,7 +14,8 @@ podTemplate(label: label, cloud: 'kubernetes',
     ],
     volumes: [
         hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-        hostPathVolume(mountPath: '/root/.ssh', hostPath: '/root/.ssh')
+        hostPathVolume(mountPath: '/root/.ssh', hostPath: '/root/.ssh'),
+        hostPathVolume(mountPath: '/tmp/cache', hostPath: '/date/cache/pingcode-plugin')
     ]
 ) {
     node(label) {
@@ -30,14 +31,14 @@ podTemplate(label: label, cloud: 'kubernetes',
                 if (env.DISABLE_WTCTL != "true") {
                     if (env.RUN_BETA != "true") {
                         container('wtctl') {
-			                sh 'wtctl'
+                            sh 'wtctl'
                         }
                    }
 
                 if (env.RUN_BETA == "true") {
                     echo 'Using PingCode Pipeline'
                     container('wtctl') {
-			            sh 'export TAG_NAME=$(git describe --tags) && wtctl'
+                        sh 'export TAG_NAME=$(git describe --tags) && wtctl'
                     }
                    }
                 }

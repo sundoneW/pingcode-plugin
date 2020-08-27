@@ -26,7 +26,7 @@ Using `#IDENTIFIER`in your commit messages, branch names and pull request titles
 
 ### Manual Install
 
-1. Download pingcode.hpi from [pingcode jenkins plugins archive url](http://archives.jenkins-ci.org/plugins/p/latest/p.hpi).
+1. Download pingcode.hpi from [pingcode jenkins plugins archive url](http://cdn.pingcode.com/jenkins/latest/pingcode.hpi).
 2. Login to your Jenkins server.
 3. Navigate to the Plugin Manager.
 4. Select the "Advanced" tab and navigate to the Upload Plugin, upload pingcode.hpi file.
@@ -42,9 +42,9 @@ Using `#IDENTIFIER`in your commit messages, branch names and pull request titles
 4. Enter the following information:
    - Application name.
    - Authentication method - `Client Credentials`.
-   - Permission - The range of data that can be accessed. Give `DevOps: 构建` and `DevOps: 发布` read and write permission.
+   - Permission - The range of data that can be accessed. Give `构建` and `发布` read and write permission.
 
-    ![Yqnd91.jpg](https://s1.ax1x.com/2020/05/21/Yqnd91.jpg)
+    ![JenkinsPluginSetting](https://ftp.bmp.ovh/imgs/2020/08/d4786efe1b8e6eee.png)
 5. Copy Client ID and Client Secret.
 
 ### Configure Plugin
