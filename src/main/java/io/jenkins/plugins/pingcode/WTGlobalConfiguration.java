@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 public class WTGlobalConfiguration extends GlobalConfiguration {
     public static final String DEFAULT_ENDPOINT = "https://open.pingcode.com";
 
-    public static final String PINGCODE_GLOBAL_CONFIG_ID = "pingcode-global-configuration";
+    public static final String PINGCODE_GLOBAL_CONFIG_ID = "worktile-global-configuration";
 
     public static final Logger logger = Logger.getLogger(WTGlobalConfiguration.class.getName());
 
