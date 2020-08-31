@@ -1,4 +1,4 @@
-package io.jenkins.plugins.pingcode;
+package io.jenkins.plugins.worktile;
 
 import hudson.model.Run;
 import org.junit.Test;
