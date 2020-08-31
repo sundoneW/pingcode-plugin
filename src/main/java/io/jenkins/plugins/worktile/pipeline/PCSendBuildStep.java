@@ -26,7 +26,7 @@ import io.jenkins.plugins.worktile.WTLogger;
 import io.jenkins.plugins.worktile.model.WTBuildEntity;
 import io.jenkins.plugins.worktile.service.WTRestService;
 
-public class WTSendBuildStep extends Step implements Serializable {
+public class PCSendBuildStep extends Step implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @DataBoundSetter
@@ -45,7 +45,7 @@ public class WTSendBuildStep extends Step implements Serializable {
     private String resultURL;
 
     @DataBoundConstructor
-    public WTSendBuildStep() {
+    public PCSendBuildStep() {
     }
 
     @Override
@@ -56,9 +56,9 @@ public class WTSendBuildStep extends Step implements Serializable {
     public static class WTSendBuildStepExecution extends SynchronousNonBlockingStepExecution<Boolean> {
         private static final long serialVersionUID = 1L;
 
-        private final WTSendBuildStep step;
+        private final PCSendBuildStep step;
 
-        public WTSendBuildStepExecution(StepContext context, WTSendBuildStep step) {
+        public WTSendBuildStepExecution(StepContext context, PCSendBuildStep step) {
             super(context);
             this.step = step;
         }
@@ -101,12 +101,12 @@ public class WTSendBuildStep extends Step implements Serializable {
 
         @Override
         public String getFunctionName() {
-            return "worktileBuildRecord";
+            return "pingcodeBuildRecord";
         }
 
         @NotNull
         public String getDisplayName() {
-            return "Send build result to worktile";
+            return "Send build result to pingcode";
         }
     }
 }

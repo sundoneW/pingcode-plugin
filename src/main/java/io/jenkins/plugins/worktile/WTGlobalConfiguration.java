@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 @Extension
 public class WTGlobalConfiguration extends GlobalConfiguration {
-    public static final String DEFAULT_ENDPOINT = "https://open.worktile.com";
+    public static final String DEFAULT_ENDPOINT = "https://open.pingcode.com";
 
     public static final String WORKTILE_GLOBAL_CONFIG_ID = "worktile-global-configuration";
 

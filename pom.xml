@@ -10,19 +10,19 @@
 
   <groupId>io.jenkins.plugins</groupId>
   <artifactId>worktile</artifactId>
-  <version>1.1.7-SNAPSHOT</version>
+  <version>1.1.9-SNAPSHOT</version>
   <packaging>hpi</packaging>
-  <name>Worktile Plugin</name>
+  <name>PingCode Plugin</name>
   <description>
-    Connect your builds and deployments with your Agile management in Worktile.
+    Connect your builds and deployments with your Agile management in PingCode.
   </description>
-  <url>https://github.com/jenkinsci/worktile-plugin</url>
+  <url>https://github.com/jenkinsci/pingcode-plugin</url>
 
   <developers>
     <developer>
-      <id>worktile</id>
-      <name>Worktile</name>
-      <email>support@worktile.com</email>
+      <id>pingcode</id>
+      <name>PingCode</name>
+      <email>support@pingcode.com</email>
     </developer>
   </developers>
 

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Set;
 
-public class WTSendDeployStep extends Step implements Serializable {
+public class PCSendDeployStep extends Step implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String releaseName;
@@ -42,22 +42,22 @@ public class WTSendDeployStep extends Step implements Serializable {
     private boolean isTagged;
 
     @DataBoundConstructor
-    public WTSendDeployStep(String releaseName, String environmentName) {
+    public PCSendDeployStep(String releaseName, String environmentName) {
         this.releaseName = releaseName;
         this.environmentName = environmentName;
     }
 
     @Override
     public StepExecution start(StepContext context) throws Exception {
-        return new WTSendDeployStepExecution(context, this);
+        return new PCSendDeployStepExecution(context, this);
     }
 
-    public static class WTSendDeployStepExecution extends SynchronousNonBlockingStepExecution<Boolean> {
+    public static class PCSendDeployStepExecution extends SynchronousNonBlockingStepExecution<Boolean> {
         private static final long serialVersionUID = 1L;
 
-        private final WTSendDeployStep step;
+        private final PCSendDeployStep step;
 
-        public WTSendDeployStepExecution(StepContext context, WTSendDeployStep step) {
+        public PCSendDeployStepExecution(StepContext context, PCSendDeployStep step) {
             super(context);
             this.step = step;
         }
@@ -119,13 +119,13 @@ public class WTSendDeployStep extends Step implements Serializable {
 
         @Override
         public String getFunctionName() {
-            return "worktileDeployRecord";
+            return "pingcodeDeployRecord";
         }
 
         @org.jetbrains.annotations.NotNull
         @Override
         public String getDisplayName() {
-            return "Send deploy result to worktile";
+            return "Send deploy result to pingcode";
         }
     }
 }

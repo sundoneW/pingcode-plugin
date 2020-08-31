@@ -14,7 +14,8 @@ podTemplate(label: label, cloud: 'kubernetes',
     ],
     volumes: [
         hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-        hostPathVolume(mountPath: '/root/.ssh', hostPath: '/root/.ssh')
+        hostPathVolume(mountPath: '/root/.ssh', hostPath: '/root/.ssh'),
+        hostPathVolume(mountPath: '/tmp/cache', hostPath: '/date/cache/pingcode-plugin')
     ]
 ) {
     node(label) {
@@ -24,26 +25,21 @@ podTemplate(label: label, cloud: 'kubernetes',
         def commit = scmVars.GIT_COMMIT
         def branch = scmVars.GIT_BRANCH
 
-        stage('Using Worktile Pipeline') {
+        stage('Using pingcode Pipeline') {
             script {
 
                 if (env.DISABLE_WTCTL != "true") {
-
-                   if (env.RUN_BETA != "true") {
-                     container('wtctl') {
-			                       sh 'wtctl'
-
-                      }
+                    if (env.RUN_BETA != "true") {
+                        container('wtctl') {
+			                sh 'wtctl'
+                        }
                    }
-
-                   if (env.RUN_BETA == "true") {
-                     echo 'Using Worktile Pipeline'
-
-                      container('wtctl') {
-			                       sh 'export TAG_NAME=$(git describe --tags) && wtctl'
-                      }
-                   }
-
+                    if (env.RUN_BETA == "true") {
+                        echo 'Using pingcode Pipeline'
+                        container('wtctl') {
+			                sh 'export TAG_NAME=$(git describe --tags) && wtctl'
+                        }
+                    }
                 }
             }
         }

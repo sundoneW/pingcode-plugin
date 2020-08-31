@@ -26,7 +26,7 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import java.io.IOException;
 
-public class WTDeployNotifier extends Notifier implements SimpleBuildStep {
+public class PCDeployNotifier extends Notifier implements SimpleBuildStep {
     private String environmentName;
 
     private String releaseName;
@@ -36,7 +36,7 @@ public class WTDeployNotifier extends Notifier implements SimpleBuildStep {
     private boolean tagged;
 
     @DataBoundConstructor
-    public WTDeployNotifier(final String releaseName, final String environmentName, final String releaseUrl,
+    public PCDeployNotifier(final String releaseName, final String environmentName, final String releaseUrl,
             boolean tagged) {
         setReleaseName(releaseName);
         setReleaseUrl(releaseUrl);
@@ -130,13 +130,13 @@ public class WTDeployNotifier extends Notifier implements SimpleBuildStep {
 
         @Override
         public String getDisplayName() {
-            return Messages.WTDeployNotifier_DisplayName();
+            return Messages.PCDeployNotifier_DisplayName();
         }
 
         @Override
-        public WTDeployNotifier newInstance(final StaplerRequest request, @NotNull final JSONObject formData) {
+        public PCDeployNotifier newInstance(final StaplerRequest request, @NotNull final JSONObject formData) {
             assert request != null;
-            return request.bindJSON(WTDeployNotifier.class, formData);
+            return request.bindJSON(PCDeployNotifier.class, formData);
         }
 
         @Override
@@ -148,7 +148,7 @@ public class WTDeployNotifier extends Notifier implements SimpleBuildStep {
         public FormValidation doCheckReleaseName(
                 @QueryParameter(value = "releaseName", fixEmpty = true) String releaseName) {
             if (WTHelper.isBlank(releaseName)) {
-                return FormValidation.error(Messages.WTDeployNotifier_ReleaseNameEmpty());
+                return FormValidation.error(Messages.PCDeployNotifier_ReleaseNameEmpty());
             }
             return FormValidation.ok();
         }
@@ -156,7 +156,7 @@ public class WTDeployNotifier extends Notifier implements SimpleBuildStep {
         public FormValidation doCheckEnvironmentName(
                 @QueryParameter(value = "environmentName", fixEmpty = true) String environmentName) {
             if (WTHelper.isBlank(environmentName)) {
-                return FormValidation.error(Messages.WTDeployNotifier_EnvironmentEmpty());
+                return FormValidation.error(Messages.PCDeployNotifier_EnvironmentEmpty());
             }
             return FormValidation.ok();
         }

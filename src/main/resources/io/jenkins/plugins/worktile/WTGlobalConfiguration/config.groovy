@@ -1,10 +1,10 @@
-package io.jenkins.plugins.worktile.WTGlobalConfiguration
+package io.jenkins.plugins.pingcode.WTGlobalConfiguration
 
 /* groovylint-disable-next-line CompileStatic */
 f = namespace(lib.FormTagLib)
 c = namespace(lib.CredentialsTagLib)
 
-f.section(title: _('Worktile application')) {
+f.section(title: _('PingCode application')) {
     f.entry(title:_('Endpoint'), field:'endpoint') {
         f.textbox(default: instance.defaultEndpoint)
     }

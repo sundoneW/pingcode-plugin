@@ -23,7 +23,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-public class WTBuildNotifier extends Notifier implements SimpleBuildStep {
+public class PCBuildNotifier extends Notifier implements SimpleBuildStep {
 
     private String overview;
 
@@ -32,7 +32,7 @@ public class WTBuildNotifier extends Notifier implements SimpleBuildStep {
     private String resultURL;
 
     @DataBoundConstructor
-    public WTBuildNotifier(String overview, String defaultSummary) {
+    public PCBuildNotifier(String overview, String defaultSummary) {
         setOverview(overview);
         setDefaultSummary(defaultSummary);
     }
@@ -94,7 +94,7 @@ public class WTBuildNotifier extends Notifier implements SimpleBuildStep {
     @Extension
     public static class Descriptor extends BuildStepDescriptor<Publisher> {
         public Descriptor() {
-            super(WTBuildNotifier.class);
+            super(PCBuildNotifier.class);
         }
 
         @SuppressWarnings("rawtypes")
@@ -106,13 +106,13 @@ public class WTBuildNotifier extends Notifier implements SimpleBuildStep {
         @NotNull
         @Override
         public String getDisplayName() {
-            return Messages.WTBuildNotifier_DisplayName();
+            return Messages.PCBuildNotifier_DisplayName();
         }
 
         @Override
-        public WTBuildNotifier newInstance(StaplerRequest request, @NotNull JSONObject formData) throws FormException {
+        public PCBuildNotifier newInstance(StaplerRequest request, @NotNull JSONObject formData) throws FormException {
             assert request != null;
-            return request.bindJSON(WTBuildNotifier.class, formData);
+            return request.bindJSON(PCBuildNotifier.class, formData);
         }
     }
 }
