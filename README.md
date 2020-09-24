@@ -37,14 +37,14 @@ Using `#IDENTIFIER`in your commit messages, branch names and pull request titles
 ### Create PingCode REST API App
 
 1. Login to PingCode.
-2. On the left navigation bar of each page > Product > Backstage management > Application management > Custom application.
+2. On the left navigation bar of each page > Product > Backstage management > Credential management.
 3. Click "New application".
 4. Enter the following information:
    - Application name.
    - Authentication method - `Client Credentials`.
    - Permission - The range of data that can be accessed. Give `构建` and `发布` read and write permission.
 
-    ![JenkinsPluginSetting](https://ftp.bmp.ovh/imgs/2020/08/d4786efe1b8e6eee.png)
+    ![JenkinsPluginSetting](https://ftp.bmp.ovh/imgs/2020/09/dc3f6a0c6ba32d06.png)
 5. Copy Client ID and Client Secret.
 
 ### Configure Plugin
