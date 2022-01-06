@@ -199,9 +199,9 @@
   </dependencies>
 
   <scm>
-    <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/pingcode-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/pingcode-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/pingcode-plugin</url>
     <tag>HEAD</tag>
   </scm>
 
