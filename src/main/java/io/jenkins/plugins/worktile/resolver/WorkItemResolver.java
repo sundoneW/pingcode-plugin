@@ -142,14 +142,14 @@ public class WorkItemResolver {
             List<String> messages = gitStoreDir.act(new GitCommitMessageCallback(listener, ObjectId.fromString(prActualCommit)));
             collection.addAll(messages);
         }
-        else if (branchName != null) {
-            wtLogger.info("Branch rule hit");
-            List<String> messages = gitStoreDir.act(new GitBranchCallback(listener, branchName, isChangeSetsExisted));
-            collection.addAll(messages);
-        }
         else if (isTagged) {
             wtLogger.info("Tag rule hit");
             List<String> messages = gitStoreDir.act(new GitTagsCallback(listener));
+            collection.addAll(messages);
+        }
+        else if (branchName != null) {
+            wtLogger.info("Branch rule hit");
+            List<String> messages = gitStoreDir.act(new GitBranchCallback(listener, branchName, isChangeSetsExisted));
             collection.addAll(messages);
         }
         else {
