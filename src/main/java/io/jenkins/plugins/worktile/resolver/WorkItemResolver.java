@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 public class WorkItemResolver {
     public static final Logger logger = Logger.getLogger(WorkItemResolver.class.getName());
-    public static final Pattern pattern = Pattern.compile("#[^(\\s|/)]*[A-Za-z0-9_-]{0,10}-[0-9]+");
+    public static final Pattern pattern = Pattern.compile("#[^(\\s|/)]*[A-Za-z0-9_-]{0,15}-[0-9]+");
     public static final String VCSFolder = ".git";
 
     private final Set<String> collection = new HashSet<>();
@@ -46,14 +46,12 @@ public class WorkItemResolver {
     private boolean isChangeSetsExisted = false;
 
     public WorkItemResolver(
-        final Run<?, ?> run, final FilePath workspace, final TaskListener listener
-    ) {
+            final Run<?, ?> run, final FilePath workspace, final TaskListener listener) {
         this(run, workspace, listener, false);
     }
 
     public WorkItemResolver(
-        final Run<?, ?> run, final FilePath workspace, final TaskListener listener, boolean isTagged
-    ) {
+            final Run<?, ?> run, final FilePath workspace, final TaskListener listener, boolean isTagged) {
         this.run = run;
         this.workspace = workspace;
         this.listener = listener;
@@ -69,15 +67,14 @@ public class WorkItemResolver {
 
         try {
             setMessages();
-        }
-        catch(final Exception e) {
+        } catch (final Exception e) {
             wtLogger.info("Extract work items error from message body " + e.getMessage());
         }
 
         Set<String> sets = new HashSet<>();
         collection.forEach(item -> {
             Matcher matcher = pattern.matcher(item);
-            while(matcher.find()) {
+            while (matcher.find()) {
                 sets.add(matcher.group().toUpperCase());
             }
         });
@@ -88,17 +85,17 @@ public class WorkItemResolver {
     public void fromChangeLog() {
         final RunWithSCM scm = toSCMRun();
 
-        if(scm == null) {
+        if (scm == null) {
             wtLogger.info("Ignore scm change-sets");
             return;
         }
 
         final List changeLogSets = scm.getChangeSets();
         wtLogger.info("SCM change-sets:");
-        for(final Object changeLogSet : changeLogSets) {
-            for(final Object set : (ChangeLogSet<? extends Entry>)changeLogSet) {
-                final String msg = ((Entry)set).getMsg();
-                if(msg != null) {
+        for (final Object changeLogSet : changeLogSets) {
+            for (final Object set : (ChangeLogSet<? extends Entry>) changeLogSet) {
+                final String msg = ((Entry) set).getMsg();
+                if (msg != null) {
                     wtLogger.info(msg);
                     isChangeSetsExisted = true;
                     collection.add(msg);
@@ -110,26 +107,26 @@ public class WorkItemResolver {
 
     public void fromEnvironment() {
         final EnvVars envVars = WTHelper.safeEnvVars(run);
-        if(envVars.get("GIT_BRANCH") != null) {
+        if (envVars.get("GIT_BRANCH") != null) {
             collection.add(envVars.get("GIT_BRANCH"));
         }
-        if(envVars.get("ghprbSourceBranch") != null) {
+        if (envVars.get("ghprbSourceBranch") != null) {
             collection.add(envVars.get("ghprbSourceBranch"));
         }
-        if(envVars.get("ghprbPullTitle") != null) {
+        if (envVars.get("ghprbPullTitle") != null) {
             collection.add(envVars.get("ghprbPullTitle"));
         }
-        if(envVars.get("ghprbCommentBody") != null) {
+        if (envVars.get("ghprbCommentBody") != null) {
             collection.add(envVars.get("ghprbCommentBody"));
         }
     }
 
     public void setMessages() throws IOException, InterruptedException, GitAPIException {
-        if(run == null || workspace == null) {
+        if (run == null || workspace == null) {
             return;
         }
         final boolean isGit = workspace.child(VCSFolder).exists();
-        if(!isGit) {
+        if (!isGit) {
             wtLogger.info("unsupported vcs, current git only");
         }
         final FilePath gitStoreDir = workspace.child(VCSFolder);
@@ -139,20 +136,18 @@ public class WorkItemResolver {
 
         if (prActualCommit != null) {
             wtLogger.info("PR rule hit");
-            List<String> messages = gitStoreDir.act(new GitCommitMessageCallback(listener, ObjectId.fromString(prActualCommit)));
+            List<String> messages = gitStoreDir
+                    .act(new GitCommitMessageCallback(listener, ObjectId.fromString(prActualCommit)));
             collection.addAll(messages);
-        }
-        else if (isTagged) {
+        } else if (isTagged) {
             wtLogger.info("Tag rule hit");
             List<String> messages = gitStoreDir.act(new GitTagsCallback(listener));
             collection.addAll(messages);
-        }
-        else if (branchName != null) {
+        } else if (branchName != null) {
             wtLogger.info("Branch rule hit");
             List<String> messages = gitStoreDir.act(new GitBranchCallback(listener, branchName, isChangeSetsExisted));
             collection.addAll(messages);
-        }
-        else {
+        } else {
             wtLogger.info("None message logic hit");
         }
     }
@@ -160,14 +155,12 @@ public class WorkItemResolver {
     @SuppressWarnings("rawtypes")
     private RunWithSCM<?, ?> toSCMRun() {
         RunWithSCM runWithScm = null;
-        if(run instanceof AbstractBuild<?, ?>) {
-            runWithScm = (AbstractBuild<?, ?>)run;
-        }
-        else if(run instanceof WorkflowRun) {
-            runWithScm = (WorkflowRun)run;
-        }
-        else if(run instanceof RunWithSCM) {
-            runWithScm = (RunWithSCM)run;
+        if (run instanceof AbstractBuild<?, ?>) {
+            runWithScm = (AbstractBuild<?, ?>) run;
+        } else if (run instanceof WorkflowRun) {
+            runWithScm = (WorkflowRun) run;
+        } else if (run instanceof RunWithSCM) {
+            runWithScm = (RunWithSCM) run;
         }
         return runWithScm;
     }
@@ -183,26 +176,26 @@ public class WorkItemResolver {
         }
 
         @Override
-        public List<String> invoke(final File file, final VirtualChannel virtualChannel) throws IOException, InterruptedException {
+        public List<String> invoke(final File file, final VirtualChannel virtualChannel)
+                throws IOException, InterruptedException {
             List<String> messages = new ArrayList<>();
-            if(!file.exists() || !file.isDirectory()) {
+            if (!file.exists() || !file.isDirectory()) {
                 return messages;
             }
-            try(FileRepository fileRepository = new FileRepository(file.getAbsolutePath())) {
+            try (FileRepository fileRepository = new FileRepository(file.getAbsolutePath())) {
                 ObjectId currentHeadId = fileRepository.resolve("HEAD~^{commit}");
-                if(currentHeadId == null) {
+                if (currentHeadId == null) {
                     return messages;
                 }
                 Git git = new Git(fileRepository);
                 try {
                     final Iterable<RevCommit> items = git.log().addRange(currentHeadId, prHeadCommitId).call();
-                    for(final RevCommit commit : items) {
-                        if(commit != null) {
+                    for (final RevCommit commit : items) {
+                        if (commit != null) {
                             messages.add(commit.getFullMessage());
                         }
                     }
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     listener.getLogger().println("collection message error: " + e.getMessage());
                 }
                 git.close();
@@ -221,45 +214,47 @@ public class WorkItemResolver {
         }
 
         @Override
-        public List<String> invoke(final File file, final VirtualChannel virtualChannel) throws IOException, InterruptedException {
+        public List<String> invoke(final File file, final VirtualChannel virtualChannel)
+                throws IOException, InterruptedException {
             List<String> messages = new ArrayList<>();
             WTLogger wtLogger = new WTLogger(listener);
-            if(!file.exists() || !file.isDirectory()) {
+            if (!file.exists() || !file.isDirectory()) {
                 return messages;
             }
-            try(FileRepository fileRepository = new FileRepository(file.getAbsolutePath())) {
+            try (FileRepository fileRepository = new FileRepository(file.getAbsolutePath())) {
                 List<Ref> tags = null;
                 Git git = new Git(fileRepository);
                 try {
                     tags = git.tagList().call();
                     this.sort(tags, new RevWalk(fileRepository));
-                    if(!tags.isEmpty()) {
+                    if (!tags.isEmpty()) {
                         Ref tag0 = tags.get(0);
                         Ref peeledRef0 = fileRepository.getRefDatabase().peel(tag0);
                         wtLogger.info("current tag = " + tag0.getName());
-                        ObjectId utilId = peeledRef0.getPeeledObjectId() != null ? peeledRef0.getPeeledObjectId() : tag0.getObjectId();
+                        ObjectId utilId = peeledRef0.getPeeledObjectId() != null ? peeledRef0.getPeeledObjectId()
+                                : tag0.getObjectId();
 
                         Ref tag1 = tags.get(1);
                         ObjectId startId = null;
-                        if(tag1 != null) {
+                        if (tag1 != null) {
                             wtLogger.info("previous tag = " + tag1.getName());
                             Ref peeledRef1 = fileRepository.getRefDatabase().peel(tag1);
-                            startId = peeledRef1.getPeeledObjectId() != null ? peeledRef1.getPeeledObjectId() : tag1.getObjectId();
+                            startId = peeledRef1.getPeeledObjectId() != null ? peeledRef1.getPeeledObjectId()
+                                    : tag1.getObjectId();
                         }
 
                         LogCommand log = git.log().addRange(startId, utilId);
                         Iterable<RevCommit> logs = log.call();
-                        for(RevCommit commit : logs) {
-                            if(commit != null) {
+                        for (RevCommit commit : logs) {
+                            if (commit != null) {
                                 String message = commit.getFullMessage();
-                                if(message != null) {
+                                if (message != null) {
                                     messages.add(message);
                                 }
                             }
                         }
                     }
-                }
-                catch(Exception exception) {
+                } catch (Exception exception) {
                     wtLogger.error("get commit message in tag error");
                 }
                 git.close();
@@ -275,8 +270,7 @@ public class WorkItemResolver {
                     d1 = walk.parseCommit(t1.getObjectId()).getCommitterIdent().getWhen();
                     d2 = walk.parseCommit(t2.getObjectId()).getCommitterIdent().getWhen();
                     return d2.compareTo(d1);
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     logger.info("sort tags error: " + e.getMessage());
                 }
                 return 0;
@@ -290,7 +284,6 @@ public class WorkItemResolver {
         private final String branchName;
         private final boolean isChangeSetsExisted;
 
-
         public GitBranchCallback(TaskListener listener, String branchName, boolean isChangeSetsExisted) {
             this.listener = listener;
             this.branchName = branchName;
@@ -298,10 +291,11 @@ public class WorkItemResolver {
         }
 
         @Override
-        public List<String> invoke(final File file, final VirtualChannel virtualChannel) throws IOException, InterruptedException {
+        public List<String> invoke(final File file, final VirtualChannel virtualChannel)
+                throws IOException, InterruptedException {
             List<String> messages = new ArrayList<>();
             WTLogger wtLogger = new WTLogger(listener);
-            if(!file.exists() || !file.isDirectory()) {
+            if (!file.exists() || !file.isDirectory()) {
                 return messages;
             }
             if (isChangeSetsExisted == true) {
