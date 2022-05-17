@@ -9,4 +9,7 @@
   <f:entry title="Release URL" field="releaseUrl">
     <f:textbox />
   </f:entry>
+  <f:entry title="Specified identifiers" field="specifiedWorkItems">
+    <f:textbox />
+  </f:entry>
 </j:jelly>

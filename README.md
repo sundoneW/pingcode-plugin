@@ -87,6 +87,9 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
       - `Result url` - Optional. A url of result for display in pingcode. if empty, the jenkins console result url will be used.
          ![result url](https://ftp.bmp.ovh/imgs/2020/08/ab6d2a256c19640f.png)
 
+      - `Specified identifiers` - Optional. list of work item identifiers. for example `PLM-100,PLM-101`. If it is empty then the command will get the work item identifiers in the SCM.
+               ![specified identifiers](https://s1.ax1x.com/2022/05/17/O4XHij.png)
+
   Finally, save these configurations. When the build is triggered, it will post the build information to PingCode. If there is a PingCode `#IDENTIFIER` in branch name, commit message or pull request title, you will get views in PingCode agile project about what happening on build.
 
 ##### Send deployment information
@@ -97,8 +100,9 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
        - `Release name` - Required. The name of the release. You can use environment variables for dynamic variable substitution in the name. For example: `release-${BUILD_ID}`, which means that the release name is dynamically generated using the `BUILD_ID`. All environment variables injected by the plugin can be used. If the environment variable does not exist, the source character will be retained.
        - `Environment name` - Required. The name of environment that the code will be deployed to. If the environment does not exist, the plugin will automatically create.
        - `Release URL` - Optional. A URL that can view the detail deployment results. If it is empty, no related links are displayed in PingCode.
+       - `Specified identifiers` - Optional. list of work item identifiers. for example `PLM-100,PLM-101`. If it is empty then the command will get the work item identifiers in the SCM.
 
-       ![YbTMt0.png](https://ftp.bmp.ovh/imgs/2020/08/e404f9550614f2de.png)
+       ![YbTMt0.png](https://s1.ax1x.com/2022/05/17/O4jKFH.png)
 
   Finally, save these configurations. When the deployment is triggered, it will post the deployment information to PingCode. If there is a PingCode `#IDENTIFIER` in branch name, commit message or pull request title, you will get views in PingCode agile project about what happening on deployment.
 
@@ -125,6 +129,7 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
                 overviewPattern: "^JENKINS",
                 defaultSummary: "${summaryMessage}",
                 resultURL: "https://your-host/result-${env.BUILD_ID}",
+                specifiedWorkItems: "PLM-100,PLM-101",
                 failOnError: false
             )
         }
@@ -136,6 +141,8 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
 
 - `overviewPattern` - Optional. A regular expression is used to match the result summary in the build result for display in PingCode.
 - `defaultSummary` - Optional. If no information can be matched from the result logs, this value will be sent by default.
+- `resultURL` - Optional. A URL that can view the detail results. If it is empty, no related links are displayed in PingCode.
+- `workItemIdentifiers` - Optional. list of work item identifiers. If it is empty then the command will get the work item identifiers in the SCM.
 - `failOnError` - Optional. When the value is true, if the process of sending build data to PingCode fails, the entire build will be marked as failed in Jenkins, otherwise Jenkins' build results will not be affected by it. The default value is false.
 
 ##### Send deployment information
@@ -155,6 +162,7 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
                releaseName: "release-${BUILD_ID}",
                environmentName: "Product",
                releaseURL: "https://www.pingcode.com/release-${JENKINS_HOME}",
+               specifiedWorkItems: "PLM-100,PLM-101",
                failOnError: false
            )
         }
@@ -166,6 +174,7 @@ The Jenkins plugin supports two styles of Jenkins items: `Freestyle project` and
 - `releaseName`- Required. The name of the release. You can use environment variables for dynamic variable substitution in the name. For example: `release-${BUILD_ID}`, which means that the release name is dynamically generated using the `BUILD_ID`. All environment variables injected by the plugin can be used. If the environment variable does not exist, the source character will be retained.
 - `environmentName` - Required. The name of environment that the code will be deployed to. If the environment does not exist, the plugin will automatically create.
 - `releaseURL` - Optional. A URL that can view the detail deployment results. If it is empty, no related links are displayed in PingCode.
+- `workItemIdentifiers` - Optional. list of work item identifiers. If it is empty then the command will get the work item identifiers in the SCM.
 - `failOnError` - Optional. When the value is true, if the process of sending deployment data to PingCode fails, the entire deployment will be marked as failed in Jenkins, otherwise Jenkins' deployment results will not be affected by it. The default value is false.
 
 ## View Builds/Deployments in PingCode

@@ -24,12 +24,12 @@ public class WTBuildEntity {
     public long duration;
 
     public static WTBuildEntity from(Run<?, ?> run, FilePath workspace, TaskListener listener, String pattern,
-            String defaultSummary, String resultURL) {
-        return WTBuildEntity.from(run, workspace, listener, null, pattern, defaultSummary, resultURL);
+            String defaultSummary, String resultURL, String specifiedWorkItems) {
+        return WTBuildEntity.from(run, workspace, listener, null, pattern, defaultSummary, resultURL, specifiedWorkItems);
     }
 
     public static WTBuildEntity from(Run<?, ?> run, FilePath workspace, TaskListener listener, String status,
-            String pattern, String defaultSummary, String resultURL) {
+            String pattern, String defaultSummary, String resultURL, String specifiedWorkItems) {
         WTBuildEntity entity = new WTBuildEntity();
         if (status == null) {
             String autoStatus = WTHelper.statusOfRun(run);
@@ -62,9 +62,15 @@ public class WTBuildEntity {
             entity.resultUrl = (resultURL == null || resultURL.trim().isEmpty()) ? defaultResultUrl
                     : vars.expand(resultURL);
         }
-        entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener) //
+
+        if (specifiedWorkItems != null && specifiedWorkItems.length() > 0) {
+            entity.workItemIdentifiers = specifiedWorkItems.split(",");
+        }
+        else {
+            entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener) //
                 .resolve() //
                 .toArray(new String[0]);
+        }
 
         return entity;
     }
