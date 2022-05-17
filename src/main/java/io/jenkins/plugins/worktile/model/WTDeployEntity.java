@@ -41,7 +41,7 @@ public class WTDeployEntity {
         entity.duration = Math.subtractExact(entity.endAt, entity.startAt);
 
         if (specifiedWorkItems != null && specifiedWorkItems.length() > 0) {
-            entity.workItemIdentifiers = specifiedWorkItems.split(",");
+            entity.workItemIdentifiers = vars.expand(specifiedWorkItems).split(",");
         }
         else {
             entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener, isTagged)//
