@@ -33,13 +33,16 @@ public class PCDeployNotifier extends Notifier implements SimpleBuildStep {
 
     private String releaseUrl;
 
+    private String specifiedWorkItems;
+
     private boolean tagged;
 
     @DataBoundConstructor
     public PCDeployNotifier(final String releaseName, final String environmentName, final String releaseUrl,
-            boolean tagged) {
+            final String specifiedWorkItems, boolean tagged) {
         setReleaseName(releaseName);
         setReleaseUrl(releaseUrl);
+        setSpecifiedWorkItems(specifiedWorkItems);
         setEnvironmentName(environmentName);
         setTagged(tagged);
     }
@@ -70,7 +73,7 @@ public class PCDeployNotifier extends Notifier implements SimpleBuildStep {
             }
         }
 
-        WTDeployEntity entity = WTDeployEntity.from(run, workspace, listener, getReleaseName(), getReleaseUrl(), envId,
+        WTDeployEntity entity = WTDeployEntity.from(run, workspace, listener, getReleaseName(), getReleaseUrl(), getSpecifiedWorkItems(), envId,
                 tagged);
         wtLogger.info("Will send data to pingcode: " + entity.toString());
         try {
@@ -105,6 +108,15 @@ public class PCDeployNotifier extends Notifier implements SimpleBuildStep {
     @DataBoundSetter
     public void setReleaseUrl(final String releaseUrl) {
         this.releaseUrl = Util.fixEmptyAndTrim(releaseUrl);
+    }
+
+    public String getSpecifiedWorkItems() {
+        return specifiedWorkItems;
+    }
+
+    @DataBoundSetter
+    public void setSpecifiedWorkItems(final String specifiedWorkItems) {
+        this.specifiedWorkItems = specifiedWorkItems;
     }
 
     public String getEnvironmentName() {

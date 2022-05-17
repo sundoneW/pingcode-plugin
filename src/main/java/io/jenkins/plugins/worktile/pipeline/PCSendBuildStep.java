@@ -44,6 +44,10 @@ public class PCSendBuildStep extends Step implements Serializable {
     @DataBoundSetter
     private String resultURL;
 
+    @DataBoundSetter
+    private String specifiedWorkItems;
+
+
     @DataBoundConstructor
     public PCSendBuildStep() {
     }
@@ -76,7 +80,8 @@ public class PCSendBuildStep extends Step implements Serializable {
                     step.status, //
                     step.overviewPattern, //
                     step.defaultSummary, //
-                    step.resultURL);
+                    step.resultURL, //
+                    step.specifiedWorkItems);
             WTRestService service = new WTRestService();
             logger.info("Will send data to pingcode: " + entity.toString());
             try {

@@ -33,6 +33,9 @@ public class PCSendDeployStep extends Step implements Serializable {
     private String releaseURL;
 
     @DataBoundSetter
+    private String specifiedWorkItems;
+
+    @DataBoundSetter
     private boolean failOnError;
 
     @DataBoundSetter
@@ -69,8 +72,8 @@ public class PCSendDeployStep extends Step implements Serializable {
             TaskListener listener = getContext().get(TaskListener.class);
 
             WTLogger wtLogger = new WTLogger(listener);
-
             WTRestService service = new WTRestService();
+            
             String envId = null;
             try {
                 envId = handleEnvName(this.step.environmentName, service);
@@ -86,7 +89,7 @@ public class PCSendDeployStep extends Step implements Serializable {
             }
 
             WTDeployEntity entity = WTDeployEntity.from(run, workspace, listener, this.step.status,
-                    this.step.releaseName, this.step.releaseURL, envId, this.step.isTagged);
+                    this.step.releaseName, this.step.releaseURL, this.step.specifiedWorkItems, envId, this.step.isTagged);
 
             wtLogger.info("Will send data to pingcode: " + entity.toString());
             try {

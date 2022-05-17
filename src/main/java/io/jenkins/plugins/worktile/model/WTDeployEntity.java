@@ -18,12 +18,12 @@ public class WTDeployEntity {
     public String[] workItemIdentifiers;
 
     public static WTDeployEntity from(Run<?, ?> run, FilePath workspace, TaskListener listener, String releaseName,
-            String releaseUrl, String envId, boolean isTagged) {
-        return WTDeployEntity.from(run, workspace, listener, null, releaseName, releaseUrl, envId, isTagged);
+            String releaseUrl, String specifiedWorkItems, String envId, boolean isTagged) {
+        return WTDeployEntity.from(run, workspace, listener, null, releaseName, releaseUrl, specifiedWorkItems, envId, isTagged);
     }
 
     public static WTDeployEntity from(Run<?, ?> run, FilePath workspace, TaskListener listener, String status,
-            String releaseName, String releaseUrl, String envId, boolean isTagged) {
+            String releaseName, String releaseUrl, String specifiedWorkItems, String envId, boolean isTagged) {
         WTDeployEntity entity = new WTDeployEntity();
 
         if (status == null) {
@@ -39,9 +39,16 @@ public class WTDeployEntity {
         entity.startAt = WTHelper.toSafeTs(run.getStartTimeInMillis());
         entity.endAt = WTHelper.toSafeTs(System.currentTimeMillis());
         entity.duration = Math.subtractExact(entity.endAt, entity.startAt);
-        entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener, isTagged)//
+
+        if (specifiedWorkItems != null && specifiedWorkItems.length() > 0) {
+            entity.workItemIdentifiers = specifiedWorkItems.split(",");
+        }
+        else {
+            entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener, isTagged)//
                 .resolve()//
                 .toArray(new String[0]);
+        }
+
         return entity;
     }
 

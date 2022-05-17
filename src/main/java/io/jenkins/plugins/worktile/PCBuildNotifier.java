@@ -31,10 +31,15 @@ public class PCBuildNotifier extends Notifier implements SimpleBuildStep {
 
     private String resultURL;
 
+    private String specifiedWorkItems;
+
     @DataBoundConstructor
-    public PCBuildNotifier(String overview, String defaultSummary) {
+    public PCBuildNotifier(String overview, String defaultSummary, final String resultURL,
+            final String specifiedWorkItems) {
         setOverview(overview);
         setDefaultSummary(defaultSummary);
+        setResultURL(resultURL);
+        setSpecifiedWorkItems(specifiedWorkItems);
     }
 
     public String getResultURL() {
@@ -44,6 +49,15 @@ public class PCBuildNotifier extends Notifier implements SimpleBuildStep {
     @DataBoundSetter
     public void setResultURL(String resultURL) {
         this.resultURL = resultURL;
+    }
+
+    public String getSpecifiedWorkItems() {
+        return specifiedWorkItems;
+    }
+
+    @DataBoundSetter
+    public void setSpecifiedWorkItems(final String specifiedWorkItems) {
+        this.specifiedWorkItems = specifiedWorkItems;
     }
 
     public String getDefaultSummary() {
@@ -64,7 +78,7 @@ public class PCBuildNotifier extends Notifier implements SimpleBuildStep {
     private void createBuild(Run<?, ?> run, FilePath workspace, @Nonnull TaskListener listener) throws IOException {
         WTLogger logger = new WTLogger(listener);
         WTBuildEntity entity = WTBuildEntity.from(run, workspace, listener, getOverview(), getDefaultSummary(),
-                getResultURL());
+                getResultURL(), getSpecifiedWorkItems());
 
         WTRestService service = new WTRestService();
         logger.info("Will send data to pingcode: " + entity.toString());
