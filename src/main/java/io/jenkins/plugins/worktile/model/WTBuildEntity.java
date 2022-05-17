@@ -64,7 +64,7 @@ public class WTBuildEntity {
         }
 
         if (specifiedWorkItems != null && specifiedWorkItems.length() > 0) {
-            entity.workItemIdentifiers = specifiedWorkItems.split(",");
+            entity.workItemIdentifiers = vars.expand(specifiedWorkItems).split(",");
         }
         else {
             entity.workItemIdentifiers = new WorkItemResolver(run, workspace, listener) //
